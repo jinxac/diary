@@ -11,7 +11,7 @@ from mydiary.serializer import ContentSerializer
 class ContentList(APIView):
   def get(self, request):
     content = Content.objects.all()
-    serializer = ContentSerializer(data=request.data, many=True)
+    serializer = ContentSerializer(content, many=True)
     return Response(serializer.data)
 
   def post(self, request, format=None):
