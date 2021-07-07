@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,6 +10,7 @@ from .serializer import BlogSerializer
 
 
 class BlogList(APIView):
+  permission_classes = [IsAuthenticated]
   def get(self, request):
     blogs = Blog.objects.all()
     serializer = BlogSerializer(blogs, many=True)
@@ -27,6 +29,8 @@ class BlogDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Blog.objects.get(pk=pk)
