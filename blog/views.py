@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission, SAFE_METHODS
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,8 +9,12 @@ from .models import Blog
 from .serializer import BlogSerializer
 
 
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
 class BlogList(APIView):
-  permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated|ReadOnly]
   def get(self, request):
     blogs = Blog.objects.all()
     serializer = BlogSerializer(blogs, many=True)
