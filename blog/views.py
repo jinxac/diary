@@ -33,7 +33,7 @@ class BlogDetail(APIView):
     """
     Retrieve, update or delete a snippet instance.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated|ReadOnly]
 
     def get_object(self, pk):
         try:
