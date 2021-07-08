@@ -49,6 +49,30 @@ INSTALLED_APPS = [
     'blog'
 ]
 
+LOGGING = { 
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(ip_address)s %(name)-20s %(levelname)-8s %(message)s'
+        }
+    'handlers': {
+        'diary_logs': {
+            'level': 'DEBUG',
+            'filename': '/var/log/diary/app/app.log',
+            'class': 'logging.FileHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'diary': {
+            'handlers': ['diary_logs'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+    }
+}
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
